@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import logo from '../assets/keki.png'
+
 import { getUsers } from '../api/profile'
 
 import { UserList } from '../components/UserList'
@@ -11,19 +13,26 @@ import type { Kinja$User } from '../api/profile'
 
 const Loading = () => <p>Loading</p>
 
+
 const UserListContainer = styled.section`
-    width: 500px;
-    border: 1px solid #ccc;
+    max-width: 1024px;
     margin: 0 auto;
+    padding: 0 30px;
 `
 
 const ListHeader = styled.header`
-    background-color: #fafafa;
-    color: #333;
-    padding: 10px;
+    color: #222;
+    padding: 30px 15px 15px;
     h2 {
         margin: 0;
     }
+`
+
+const AdminHeader = styled.header`
+    margin: 0;
+    height: 67px;
+    padding: 10px;
+    background: url('${logo}') left 10px center no-repeat #222;
 `
 
 const ListFooter = styled(ListHeader)`
@@ -50,14 +59,17 @@ export class UserAdmin extends React.Component<Props, State> {
         const { users } = this.state
 
         return (
-            <UserListContainer>
-                <ListHeader>
-                    <h2>Member List</h2>
-                </ListHeader>
-                {users.length ? <UserList users={users.slice(0, 10)} /> : <Loading />}
-                <ListFooter>
-                </ListFooter>
-            </UserListContainer>
+            <>
+                <AdminHeader />
+                <UserListContainer>
+                    <ListHeader>
+                        <h2>Users</h2>
+                    </ListHeader>
+                    {users.length ? <UserList users={users.slice(0, 10)} /> : <Loading />}
+                    <ListFooter>
+                    </ListFooter>
+                </UserListContainer>
+            </>
         )
     }
 }
